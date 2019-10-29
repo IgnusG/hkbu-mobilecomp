@@ -15,8 +15,10 @@
 \renewcommand{\thesubsubsection}{\thesubsection\alph{subsubsection})}
 % Configure sub and subsub sections to display inline
 \setcounter{secnumdepth}{3}
+\titleformat{\subsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsection}{0em}{}
 \titleformat{\subsubsection}[runin]
-  {\normalfont\large\bfseries}{\thesubsubsection}{0.5em}{}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
 % Create new commands to reference exercises
 \newcommand{\exercise}{\subsection{}\setcounter{subsubsection}{0}}
 \newcommand{\multipartexercise}{\addtocounter{subsection}{1}\setcounter{subsubsection}{0}}
