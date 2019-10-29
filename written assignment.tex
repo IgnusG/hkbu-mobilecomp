@@ -3,13 +3,15 @@
 \usepackage{amsmath} % Math
 \usepackage[normalem]{ulem} % Strike-through Text
 \usepackage{graphicx} % Images
-\usepackage{titlesec}
+\usepackage{titlesec} % Title Configuration
 
-\newcommand{\cross}[1]{\text{\sout{\ensuremath{#1}}}}
 \graphicspath{ {./images/} }
 
-% Change subsub sections numbering to alphabetical
+% Command to strike-through text in math equations
+\newcommand{\cross}[1]{\text{\sout{\ensuremath{#1}}}}
+% Adjust the format of subsection (#. )
 \renewcommand{\thesubsection}{\arabic{subsection}.\hspace{0.2em}}
+% Change subsub sections numbering to alphabetical (a))
 \renewcommand{\thesubsubsection}{\thesubsection\alph{subsubsection})}
 % Configure sub and subsub sections to display inline
 \setcounter{secnumdepth}{3}
@@ -32,23 +34,20 @@
 
 \section*{Fundamentals of Wireless Communication}
 \multipartexercise \exercisepart
-Given that the distances form a right angled triangle we can use the pythagorean theorem to calculate/estimate the distance.
+Since the distances form a right angled triangle, we can use the pythagorean theorem to calculate/estimate the distance.
 
 \begin{align*}
     c^2 &= a^2 + b^2 \\
     (6370 + \frac{h}{1000})^2 &= d^2 + 6370^2 \\
-    \cross{6370^2} + \frac{2*6370*h}{1000} + \frac{h^2}{1000} &= d^2 + \cross{6370^2} \\
-    d &= \sqrt{12.74*h + \frac{h^2}{1000^2}}
-    \intertext{Given $\frac{h^2}{1000^2}$ is negligible for a small $h$} \\
+    \cross{6370^2} + \frac{2*6370*h}{1000} + (\frac{h}{1000})^2 &= d^2 + \cross{6370^2} \\
+    d &= \sqrt{12.74*h + (\frac{h}{1000})^2}
+    \intertext{With $(\frac{h}{1000})^2$ being negligible for $h \ll \text{earth radius}$} \\
     d &= 3.57*\sqrt{h}
 \end{align*}
 
 \exercisepart
-Given Lion's Rock height of $h=495m$ the line of sight distance $d=3.57*\sqrt{495}\approx79.43km$.
-
-\bigskip
-
-The line of sight covers all of the Hong Kong Area stretching even to Macau.
+Given Lion's Rock height of $h=495m$, the line of sight distance is $d=3.57*\sqrt{495}\approx79.43km$.
+The line of sight covers all of the Hong Kong Area stretching even to Macau (see figure \ref{lionsrocklos}).
 
 \begin{figure}[h]
     \centering
@@ -58,7 +57,7 @@ The line of sight covers all of the Hong Kong Area stretching even to Macau.
 \end{figure}
 
 \multipartexercise \exercisepart
-Assuming isotropic antennas and using the formula for free space loss we calculate the frequency of the transmission $f$.
+Assuming isotropic antennas and using the formula for free space loss we calculate the frequency of the transmission $f$:
 
 \begin{align*}
     \frac{P_t}{P_{r_A}} &= \frac{4*\pi*f*d}{c^2} \\
@@ -67,7 +66,7 @@ Assuming isotropic antennas and using the formula for free space loss we calcula
     &= \frac{7500000*\sqrt{2}}{\pi}
 \end{align*}
 
-Now substituting the frequency in out calculation for signal strength at the other mobile receiver station (B).
+Now substituting the frequency in our calculation for signal strength at the other mobile receiver station (B):
 
 \begin{align*}
     \frac{20mW}{P_{r_B}} &= \frac{(4*\pi*f*20)^2}{c^2} \\
@@ -76,7 +75,7 @@ Now substituting the frequency in out calculation for signal strength at the oth
 \end{align*}
 
 \exercisepart
-Using the previously calculated $f$ we now assume an uknown distance $d$
+Using the previously calculated $f$ we now calculate the maximum transmission distance by regarding $d$ as a variable:
 
 \begin{align*}
     \frac{20mW}{0.125} &= \frac{(4*\pi*f*d)^2}{c^2} \\
@@ -99,7 +98,7 @@ Moving the device away from the station increases the effect of multi-path propa
     \begin{minipage}{\textwidth}
     \item BFSK (Binary Frequency Shift Keying)
 
-    Difference in frequency of the signal (typically depicted as different widths of a wave segment) can represent different bit patterns. In this case 2 shifts are defined one for 0 and for 1 in equal but opposite direction (reduces error rate).
+    Difference in frequency of the signal (typically depicted as different widths of a wave segment) can represent different bit patterns. In this case 2 shifts are defined: one for 0 and for 1 in equal but opposite direction (reduces error rate).
     \end{minipage}
 
     \begin{minipage}{\textwidth}
@@ -127,32 +126,32 @@ Moving the device away from the station increases the effect of multi-path propa
 256-QAM can encode 256 states = $2^8$ = 8 bits. Given the same signal rate, our data rate will be $200KBaud*8=1.6Mb=200kB$.
 
 \exercise
-\textbf{FHSS (Frequency Hopping Spread Spectrum)} rapidly changes carries among many frequency channels in a way both transmitter and receiver always choose equally (pseudo-random sequence). In this way jamming becomes difficult since the adversary would have to either know the sequence or jam a wide array of channels at once hoping to hit the right ones. Similar is true for intercepting the signals.
+\textbf{FHSS (Frequency Hopping Spread Spectrum)} rapidly changes carries among many frequency channels in a way both transmitter and receiver always choose equally (pseudo-random sequence). In this way jamming becomes difficult, since the adversary would have to either know the sequence or jam a wide array of channels at once hoping to hit the right ones. Similar is true for intercepting the signals.
 
-\textbf{DSSS (Direct Sequence Spread Spectrum)} uses a similar pseudo-random sequence to encode a single bit into several bits (using xor). In this case jamming can become difficult as jamming several bits of a signal in a row requires the adversary to jam the amount*constant. Security-wise, this encoding is similar to a stream cipher.
+\textbf{DSSS (Direct Sequence Spread Spectrum)} uses a similar pseudo-random sequence to encode a single bit into several bits (using xor). In this case jamming can become difficult, as jamming several bits of a signal in a row requires the adversary to jam the amount*constant. Security-wise, this encoding is similar to a stream cipher.
 
 \section*{Principles and Standards of Wireless LANs \& Management}
 \exercise
 The hidden node problem is based around the fact that multiple nodes can be connected to an access point without being in range within each other (they themselves cannot communicate with each other).
 
-Medium access control is used to make sure messages aren't sent at the same time. \textbf{CSMA/CD} can be summed up as first looking if anyone else is transmitting (CS), then while transmitting itself detecting collisions (CD). If a collision is detected a jamming signal is sent with the transmission being interrupted and repeated after a random wait period.
+Medium access control is used to make sure messages aren't sent at the same time. \textbf{CSMA/CD} can be summed up as first looking if anyone else is transmitting (CS), then while transmitting itself detecting collisions (CD). If a collision is detected, a jamming signal is sent, with the transmission being interrupted and repeated after a random wait period.
 
-With \textbf{CSMA/CA} the node uses a similar method but, since after the transmission has started \textbf{is itself unable to reliably determine if anyone else is transmitting} (reason why CSMA/CD cannot be used), attempts to transmit the entire message and then waits for confirmation. If no confirmation (including data checksum) is received the message is considered to have been lost.
+With \textbf{CSMA/CA} the node uses a similar method but, since after the transmission has started \textbf{is itself unable to reliably determine if anyone else is transmitting} (reason why CSMA/CD cannot be used), attempts to transmit the entire message and then waits for confirmation. If no confirmation (including data checksum) is received, the message is considered to have been lost.
 
 \exercise
-\textbf{RTS/CTS} (Request to Send/Clear to Send) can be used as an additional measure to resolve the hidden node problem. Since the node has to first request "permission" to send data, nodes within reach as well as the receiver will know it wants to send and can act appropriately (senders will wait, receiver can decide to grant the request or accept other requests instead). A major disadvantage is that this exchange slows down the transmission since now 2 more messages have to be exchanged for every message/frame. This increases the transmission time.
+\textbf{RTS/CTS} (Request to Send/Clear to Send) can be used as an additional measure to resolve the hidden node problem. Since the node has to first request "permission" to send data, nodes within reach as well as the receiver will know it wants to send and can act appropriately (senders will wait, receiver can decide to grant the request or accept other requests instead). A major disadvantage is, that this exchange slows down the transmission, since now 2 more messages have to be exchanged for every message/frame. This increases the transmission time.
 
 \exercise
 The IEEE 802.11n standard improves upon the g-one by using multiple antennas and signals instead of one. This technology is called MIMO - multiple input, multiple output.
 
-IEEE 802.11ac further improves speed by extending concepts embraced by the n-standard. Supporting simultaneous transmission on both the 2.4GHz as well as the 5GHz bands, it offers transmission speeds of up to 1300Mb per second.
+IEEE 802.11ac further improves speed by extending concepts embraced by the n-standard. Supporting simultaneous transmission on both the 2.4GHz, as well as the 5GHz bands, it offers transmission speeds of up to 1300Mb per second.
 
 \exercise
 The WEP standard "features" several flaws within its specification.
-The first one being, that there are \textbf{no key management requirements} within it. This leads to the same keys being used for a long time, which can result in the traffic being decrypted once such a key is cracked, as well as sharing keys among clients which can be used by one malicious client trying to decrypt other's transmissions.
+The first one being, that there are \textbf{no key management requirements} within it. This leads to the same keys being potentrally used for a long time, which can result in the traffic being decrypted once such a key is cracked, as well as sharing keys among clients which can be used by one malicious client trying to decrypt other's transmissions.
 
 A second crucial vulnerability is the \textbf{IV (Initialization Vector)} being too small and sent in clear text. It consists of only 24bits which make up for $\approx$16million different streams. Given the way in which they are chosen is also not specified (often starts at 0 incrementing with each packet and re-rolling at the end or randomly chosen), the possibility of the same IV being used more than once is very high. Once a stream for a particular IV is found, the adversary can decrypt any packet sent using this IV.
 
-There are other issues within this standard such as the usage of weak algorithms, but such issues are, more often than not, time relevant. That is to say, given enough time any algorithm has the potential to become obsolete or inadequate and has to be replaced by a more sophisticated version. The \textbf{lack of specification} within the standard is the most damaging aspect of WEP and is the reason why today, specifications try to cover as many areas as deemed appropriate, so that security is enforced rather than optionally ignored.
+There are other issues within this standard such as the usage of weak algorithms, but such issues are time relevant. That is to say, given enough time any algorithm has the potential to become obsolete or inadequate and has to be replaced by a more sophisticated version. The \textbf{lack of specification} within the standard is the most damaging aspect of WEP and is the reason why today, specifications try to cover as many areas as deemed appropriate, so that security is enforced rather than optionally ignored.
 
 \end{document}
