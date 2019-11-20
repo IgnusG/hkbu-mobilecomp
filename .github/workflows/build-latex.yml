@@ -4,14 +4,8 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: docker://nopreserveroot/latexmk
     steps:
     - uses: actions/checkout@v1
-    - name: Install ubuntu LaTeX distribution
-      run: |
-        sudo apt-get update
-        sudo apt-get install texlive-full
-        sudo apt-get install latexmk
-    
     - name: Compile all latex files into pdfs
       run: latexmk
