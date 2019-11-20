@@ -9,6 +9,8 @@
 \usepackage{enumitem} % More Configurable enumerate
 \usepackage{pifont} % More symbols
 
+\usetikzlibrary{shapes.geometric} % Hexagons
+
 \graphicspath{ {./images/} }
 
 % Command to strike-through text in math equations
@@ -117,5 +119,91 @@ Correcting the message with $\text{P4} = 4$ to 1010010.
 \bigskip
 
 The channel seems to be quite unreliable but we manage to fix all errors thanks to the hamming code encoding.
+
+\multipartexercise
+\exercisepart
+The equation for calculating the rate can be summarized as:
+\begin{align*}
+  \frac{\text{payload bytes}*8*1000}{\text{\# slots}*0.625*1000}
+\end{align*}
+
+An ACL Link (Asynchronous Connection-Less) using DM5 and maximum number of bytes can achieve a rate of $\frac{224*8*1000}{5*0.625*1000} \approx 477.8kb/s$ as indicated in the table under asymmetric rate.
+
+The reverse connection rate uses DM1 so we adjust the number of payload bytes to 17 and and number of slots to 1 so we get $\frac{17*8*1000}{1*0.625*1000} \approx 108.8kb/s$.
+
+\exercisepart
+$2Mb=2000kb$ so with a transfer speed of $477.8kbps$ we can transfer the image in $\approx4.1s$.
+
+\exercisepart
+Since the high quality stream requires a minimum transfer speed of $256kbps$, which is below our theoretical maximum of $477.8kbps$, the connection will be stable.
+
+The "professional" grade mp3 transfer requires $512kbps$ transfer rate, which exceeds our limits. Certain packets will therefore come delayed or not at all which will result in stuttering in the audio.
+
+\exercisepart
+An SCO HV3 link only supports a maximum connection speed of $64kbps$, which is way below our limit. Most packets will not arrive at the slave on time or at all and will be dropped. The listening experience will be drastically diminished.
+
+\multipartexercise
+\exercisepart
+Given the frequency reuse of 7 and a semi-random distribution of the initial cell frequencies (2-4-6-3-5-7) we construct a hexagonal latice as shown in figure \ref{celllayout}.
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[x=15mm,y=8.68mm]
+  % Define colors for tikz
+  \definecolor{lightblue}{RGB}{173, 216, 230}
+  \definecolor{lightgray}{RGB}{211, 211, 211}
+  % Configure hexagons
+  \tikzset{
+    box/.style={
+      regular polygon,
+      regular polygon sides=6,
+      minimum size=20mm,
+      inner sep=0mm,
+      outer sep=0mm,
+      rotate=0,
+    draw
+    }
+  }
+
+\node[box,fill=lightgray] at (2*2+1,2*2+1) {5};
+
+\node[box,fill=lightblue] at (2*2,2*2) {6};
+\node[box,fill=lightgray] at (2*3,2*2) {3};
+
+\node[box,fill=lightblue] at (2*1+1,2*1+1) {3};
+\node[box] at (2*2+1,2*1+1) {2};
+\node[box,fill=lightblue] at (2*3+1,2*1+1) {7};
+
+\node[box,fill=lightgray] at (2*1,2*1) {2};
+\node[box] at (2*2,2*1) {7};
+\node[box] at (2*3,2*1) {4};
+\node[box,fill=lightblue] at (2*4,2*1) {1};
+
+\node[box,fill=lightgray] at (2*1+1,2*0+1) {4};
+\node[box] at (2*2+1,2*0+1) {1};
+\node[box,fill=lightblue] at (2*3+1,2*0+1) {5};
+
+\node[box,fill=lightgray] at (2*1,2*0) {1};
+\node[box] at (2*2,2*0) {5};
+\node[box] at (2*3,2*0) {6};
+\node[box,fill=lightblue] at (2*4,2*0) {3};
+
+\node[box,fill=lightgray] at (2*1+1,2*-1+1) {6};
+\node[box] at (2*2+1,2*-1+1) {3};
+\node[box,fill=lightgray] at (2*3+1,2*-1+1) {2};
+
+\node[box,fill=lightblue] at (2*2,2*-1) {2};
+\node[box,fill=lightgray] at (2*3,2*-1) {7};
+
+\node[box,fill=lightblue] at (2*2+1,2*-2+1) {4};
+
+\end{tikzpicture}
+\caption{Suggested cell layout using frequency reuse of 7}
+\label{celllayout}
+\end{figure}
+
+The cell area can be calculated as $1.5\sqrt{3}R^2$. Since our radius is 1km for each cell, one cell covers the surface of $\approx2.6km^2$. Our are consists of 23 segments which totals an area of $\approx59.8km^2$.
+
+\exercisepart
 
 \end{document}
