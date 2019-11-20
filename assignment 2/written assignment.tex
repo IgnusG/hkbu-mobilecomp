@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 
+\usepackage[T1]{fontenc} % Adjust font encoding to include symbols
 \usepackage[dvipsnames]{xcolor} % Colors
 \usepackage{amsmath} % Math
 \usepackage{witharrows} % Equation Arrows
@@ -141,7 +142,7 @@ The channel seems to be quite unreliable but we manage to fix all errors thanks 
 \exercisepart
 The equation for calculating the rate can be summarized as:
 \begin{align*}
-  \frac{\text{payload bytes}*8*1000}{\text{\# slots}*0.625*1000}
+  \frac{\text{payload bytes}*8*1000}{\text{\#slots}*0.625*1000}
 \end{align*}
 
 An ACL Link (Asynchronous Connection-Less) using DM5 and maximum number of bytes can achieve a rate of $\frac{224*8*1000}{5*0.625*1000} \approx 477.8kb/s$ as indicated in the table under asymmetric rate.
@@ -222,5 +223,79 @@ Given the frequency reuse of 7 and a semi-random distribution of the initial cel
 The cell area can be calculated as $1.5\sqrt{3}R^2$. Since our radius is 1km for each cell, one cell covers the surface of $\approx2.6km^2$. Our are consists of 23 segments which totals an area of $\approx59.8km^2$.
 
 \exercisepart
+In the past, before the cell architecture was introduced, a single antenna could only handle a specific amount of simultaneous connections - 25 channels on a high powered transmitter within an 80km reach.
+
+By decreasing this reach and using more transmitters, that do not interfere with each other (such as 5G antennas), the effective amount of devices capable of connecting (let's say within a city) increases.
+This is very important especially for the future of IoT technology.
+
+\exercise
+During paging the MTSO (Mobile Telecommunications Switching Office) tries to connect to a specific device and deliver a call. It sends a paging request to specific BS's within an area based on the number called, each transmitting it on their own channel.
+
+The station to which the phone being called is connected then establishes connection.
+
+\multipartexercise
+\exercisepart
+Given the chipping codes:\\
+\begin{tabular}{lrrrr}
+A:&-1&-1&-1&-1\\
+B:&-1&-1&1&1\\
+C:&-1&1&-1&1\\
+\end{tabular}
+
+Building a dot product we get $(-1*-1*-1)+(-1*-1*1)+(-1*1*-1)+(-1*1*1)=0$. Thus the 3 chipping codes are orthogonal and can be used for CDMA.
+
+\exercisepart
+For the first bit we generate the code for A (1), B (1) and C (0) by combining A and B's chipping codes and the inverse of C's chipping code (1 -1 1 -1):
+
+\bigskip
+\noindent
+(-1-1+1) (-1-1-1) (-1+1+1) (-1+1-1) = -1 -3 1 -1
+
+\bigskip
+\noindent
+The second bit pattern A (0) - inverse, B (1), C (1)\\
+(1-1-1) (1-1+1) (1+1-1) (1+1+1) = -1 1 1 3
+
+\bigskip
+\noindent
+The third bit pattern A (1), B (1), C (1)\\
+(-1-1-1) (-1-1+1) (-1+1-1) (-1+1+1) = -3 -1 -1 1
+
+\bigskip
+\noindent
+The receiver will receive the signal pattern D -1 -3 1 -1 | -1 1 1 3 | -3 -1 -1 1
+
+\exercisepart
+We take the input received and multiply it by A's chipping code:\\
+$(-1*-1) + (-3*-1) + (1*-1) + (-1*-1) = 4$ so A must have sent a 1\\
+$(-1*-1) + (1*-1) + (1*-1) + (3*-1) = -4$ so the second bit is 0\\
+$(-3*-1) + (-1*-1) + (-1*-1) + (1*-1) = 4$ so the last bit was 1
+
+\bigskip
+\noindent
+The bit pattern sent by A was therefore 101 which is indeed correct.
+
+\exercisepart
+We proceed as in the last part:\\
+$(-1*-1) + (-3*-1) + (1*1) + (-1*1) = 4 \rightarrow 1$\\
+$(-1*-1) + (1*-1) + (1*1) + (3*1) = 4 \rightarrow 1$\\
+$(-3*-1) + (-1*-1) + (-1*1) + (1*1) = 4 \rightarrow 1$
+
+\bigskip
+\noindent
+So the bit patter sent by B was 111
+
+\multipartexercise
+\exercisepart
+We can convert the DMS (degrees, minutes, seconds) format into the decimal format by using the simple formula $d + \frac{m}{60} + \frac{s}{3600}$. The result will be $22 + \frac{15}{60} + \frac{16.9}{3600} = 22.25469\overline{4}$, $113 + \frac{54}{60} + \frac{15}{3600} = 113.9041\overline{6}$
+
+\bigskip
+\noindent
+22.254694, 113.90417 (aka Tian Tan Buddha)
+
+\exercisepart
+The device can send a timestamp to the satellite and then wait for a response. The satellite sends the timestamp back and the device can then measure how long it took for the signal to travel to the satellite and back estimating the distance to it. If at least 3 satellites can be reached the location of the device can be triangulated by "drawing" a circle around each satellite with the radius of the calculated distance and finding the spot where they overlap.
+
+Using more satellites leads to better positioning results as well as above sea height measurements.
 
 \end{document}
