@@ -9,9 +9,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install ubuntu LaTeX distribution
       run: |
-        apt update
-        apt get texlive-full
-        apt get latexmk
+        sudo apt-get update
+        sudo apt-get install texlive-full
+        sudo apt-get install latexmk
     
     - name: Compile all latex files into pdfs
       run: latexmk
