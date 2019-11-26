@@ -20,5 +20,5 @@ This project uses latex for compiling the source into a pdf. These latex package
 These packages require the following arch/aur packages for Arch Linux: `texlive-latexextra`, `texlive-science`.  
 The project can be built using `latexmk`.
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>  
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Mobile Computing Assignments</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/IgnusG" property="cc:attributionName" rel="cc:attributionURL">Jonathan</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>  
 The content of these assignments have been submitted to [turnitin](https://www.turnitin.com/)
