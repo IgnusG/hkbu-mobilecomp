@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+
+\usepackage[T1]{fontenc} % Adjust font encoding to include symbols
+\usepackage[dvipsnames]{xcolor} % Colors
+\usepackage{amsmath} % Math
+\usepackage{witharrows} % Equation Arrows
+\usepackage[normalem]{ulem} % Strike-through Text
+\usepackage{graphicx} % Images
+\usepackage{titlesec} % Title Configuration
+\usepackage{enumitem} % More Configurable enumerate
+\usepackage{pifont} % More symbols
+\usepackage{array} % Vertical table alignment
+
+\graphicspath{ {./images/} }
+
+% Command to strike-through text in math equations
+\newcommand{\cross}[1]{\text{\sout{\ensuremath{#1}}}}
+% Adjust the format of subsection (#. )
+\renewcommand{\thesubsection}{\arabic{subsection}.\hspace{0.2em}}
+% Change subsub sections numbering to alphabetical (a))
+\renewcommand{\thesubsubsection}{\thesubsection\alph{subsubsection})}
+% Configure sub and subsub sections to display inline
+\setcounter{secnumdepth}{3}
+\titleformat{\subsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsection}{0em}{}
+\titleformat{\subsubsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+% Create new commands to reference exercises
+\newcommand{\exercise}{\subsection{}\setcounter{subsubsection}{0}}
+\newcommand{\multipartexercise}{\addtocounter{subsection}{1}\setcounter{subsubsection}{0}}
+\newcommand{\exercisepart}{\subsubsection{}}
+
+\title{
+    COMP4097 Mobile Computing \linebreak
+    Additional Assignment
+}
+\author{Jonatan Juhas (19502966)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\multipartexercise
+\exercisepart
+Mobile Computing's main distinction in regards to traditional computing is (as hinted at in the name) it's requirement of mobility. In this case systems need to be designed in a different manner such as to be:
+
+\begin{itemize}
+  \item More energy conservative (because of limit energy availability)
+  \item Smaller and lighter (to even allow for mobility in the first place)
+  \item Able to cope with rapidly changing location (especially with regards to wireless communication such as 4G)
+\end{itemize}
+
+\exercisepart
+WiFi in today's world is often regarded as the defacto wireless connection standard between a mobile device and the internet.
+
+Mobile Networks (often referred to as "Data" in internet slang) on the other hand are a more mobile option, since they give the user the freedom to move over vast distances while staying connected (the only requirement being the availability of mobile infrastructure in the area, and having an active data plan in the country of usage).
+
+Since the latter option does require the user to have a data plan, which is often metered, it is less suitable for performing data-heavy tasks such as downloads or video streaming. WiFi in this case, provides an often unlimited experience constricted to a smaller area such as a building.
+
+\exercisepart
+Referencing Assignment 1:
+\begin{quote}
+  Medium access control is used to make sure messages aren't sent at the same time. \textbf{CSMA/CA} can be summed up as first looking if anyone else is transmitting (CS), \dots then attempts to transmit the entire message and then waits for confirmation. If no confirmation (including data checksum) is received, the message is considered to have been lost.
+\end{quote}
+
+\multipartexercise
+\exercisepart
+Given the chipping codes:\\
+\begin{tabular}{lrrrr}
+A:&1&-1&-1&1\\
+B:&1&-1&1&-1\\
+C:&1&1&-1&-1\\
+\end{tabular}
+
+\bigskip \noindent
+Building a dot product we get $(1 \times 1)+(-1 \times -1)+(-1 \times 1)+(1 \times -1)=0 \times \text{C}=0$. Thus the 3 chipping codes are orthogonal.
+
+\exercisepart
+For the first bit we generate the code for A (1), B (1) and C (0) by combining A and B's chipping codes and the inverse of C's chipping code (-1 -1 1 1):
+
+\bigskip
+\noindent
+(1+1-1) (-1-1-1) (-1+1+1) (1-1+1) = 1 -3 1 1
+
+\bigskip
+\noindent
+The second bit pattern A (0) - inverse, B (0) - inverse, C (1)\\
+(-1-1+1) (1+1+1) (1-1-1) (-1+1-1) = -1 3 -1 -1
+
+\bigskip
+\noindent
+The third bit pattern A (1), B (0) - inverse, C (1)\\
+(1-1+1) (-1+1+1) (-1-1-1) (1+1-1) = 1 1 -3 1
+
+\bigskip
+\noindent
+The receiver will receive the signal pattern D 1 -3 1 1 | -1 3 -1 -1 | 1 1 -3 1
+
+\exercisepart
+We take the input received and multiply it by A's chipping code:\\
+$(1*1) + (-3*-1) + (1*-1) + (1*1) = 4$ so A must have sent a 1\\
+$(-1*1) + (3*-1) + (-1*-1) + (-1*1) = -4$ so the second bit is 0\\
+$(1*1) + (1*-1) + (-3*-1) + (1*1) = 4$ so the last bit was 1
+
+\bigskip
+\noindent
+The bit pattern sent by A was therefore 101 which is indeed correct.
+
+\multipartexercise
+\exercisepart
+The main difference between the 3 technologies, especially in regards to advertisement application, is the required minimum distance and user interaction.
+
+\begin{itemize}
+  \item \textbf{QR-Code} requires the maximum proximity and user interaction where the user has to open their camera/qr application and point it at the code to scan it - this also comes with low energy requirements. This implies the user has to be in the vicinity of the code and see it (understand what it means/requires them to do). The cost for a QR-Code as well as its maintenance are the lowest of the three. Damaging them is also of minor concern.
+  \item \textbf{RFID Tag} still requires a fair amount of proximity and special hardware for scanning. Other technologies such as built in NFC make additional hardware obsolete though. The user still often has to actively participate in the scan and bring their device close to the reader - energy consumption is still low but higher than a QR-Code. It might even be harder to locate as an RFID/NFC tag has no distinct visual appearance (compared to a QR-Code). The cost for the device and its maintenance are higher as well and damaging it can bear additional costs.
+  \item \textbf{iBeacon} does not require the user actively interacting (the user only has to have bluetooth activated, possibly the required app installed - high energy consumption). It is the most user friendly technology and works within longer distances. Less control from the user might make the advertisement feel more intrusive though. The device required might be expensive and require regular maintenance, but because it can usually be stationed hidden away from the user it is less likely to get damaged.
+\end{itemize}
+
+\exercisepart
+For the task of advertising, my top pick would be a QR-Code if lower cost is of importance as the technology is easy to adapt to (especially for upcoming shops/venues). For higher grade advertising where the cost is less important I would choose the iBeacons.
+
+RFID Tags (especially NFC) are in my opinion more suited for payments where I find QR-Codes too awkward and iBeacons too extensive in range, thus insecure to use.
+
+\multipartexercise
+\exercisepart
+Simple wireless connection between 2 devices over a small distance ($\approx$ 3-10m). Bluetooth can be used for networking with audio devices, security cameras, location trackers, time management devices etc.
+
+\exercisepart
+This application becomes important especially with location trackers or scientific measurement devices connected over bluetooth. The purpose of them forming a network is to save on resources where connecting to a central hub is infeasible because the amount of nodes is too high or the nodes are too far away from the hub (but not far apart between each other). The efficiency of the network depends on the resources available to the nodes. For low energy equipment, the bluetooth protocol may prove to be too heavy-load. Different technologies such as Zigby offer better scalability for for example city-wide applications as well as better security (important for IoT applications).
+
+\multipartexercise
+\exercisepart -
+
+\exercisepart
+The phone first connects to the MSC within the MTSO (Mobile Telephone Switching Office). If connection is successful, the MSC (Mobile Switching Center) can save a record in the VLR (Visitor Location Register) saying which BTS (Base Transmission Station) the phone is connected to. If a connection to a phone is required, the MSC can look up this information to find out to which BTS it should send the call to.
+
+\exercisepart
+
+\begin{itemize}
+  \item \textbf{Cell Splitting}: Cells where usage is high can be split into smaller cells to increase amount of maximum connected devices (but this implies frequent handoff).
+  \item \textbf{Cell Sectoring}: A cell can be divided into wedge-shaped sectors each served by directional antennas and their own individual channels.
+  \item \textbf{Small Cells}: Using smaller cells in areas where density of connected devices is very high drastically improves the maximum capacity the network can handle. Citing the lecture slides an area covered by 32 large cells has 1536 total amount of channels, while 128 smaller cells covering the same area can have up to 6144 channels.
+\end{itemize}
+
+\multipartexercise
+\exercisepart
+The phone connects to different stations over the course of its journey with its user. Thus if we can collect a list of the stations a phone was connecting to as well as the signal strength of those connections we can build up a database that collectively describes how the user moved around a certain area. This method works especially well with a higher amount of stations a phone can connect to - thus its better suited for city areas (indoor tracking).
+
+\exercisepart
+
+\begin{itemize}
+  \item \textbf{Ordinary Venues} are well suited for fingerprint tracking. Possible difficulties include the influence of obstacles such as walls on the signal strength.
+  \item \textbf{Large Venues} can pose a problem if a lot of people are present. The high density of devices can negatively influence the signal tracking.
+  \item \textbf{Venues with frequent changes} reduce the systems ability to learn from previous tracking as the measuring conditions change.
+\end{itemize}
+
+\end{document}
